@@ -10,3 +10,7 @@ class MensajesDeConfirmacion(Enum):
     SISTEMA_EN_LINEA = "Sistema en línea y funcionando"
     ENLACE_RECUPERACION_ENVIADO = "Si el correo existe, se enviará un enlace de recuperación"
     CLAVE_RESTABLECIDA = "Clave restablecida exitosamente"
+    USUARIO_CREADO = "Usuario creado correctamente"
+    USUARIO_ACTUALIZADO = "Usuario actualizado correctamente"
+    ESTADO_ACTUALIZADO = "Estado actualizado correctamente"
+    USUARIO_DESACTIVADO = "Usuario desactivado correctamente"
