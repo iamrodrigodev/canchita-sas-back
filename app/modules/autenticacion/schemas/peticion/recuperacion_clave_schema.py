@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, field_validator
 from pydantic_core import PydanticCustomError
+from app.core.security.validador_claves import ValidadorClaves
 
 
 class SolicitarRecuperacionClavePeticion(BaseModel):
@@ -27,6 +28,4 @@ class RestablecerClavePeticion(BaseModel):
     @field_validator('nueva_clave')
     @classmethod
     def validar_clave(cls, v):
-        if not v or len(v.strip()) < 6:
-            raise PydanticCustomError('value_error', 'La nueva clave debe tener al menos 6 caracteres')
-        return v
+        return ValidadorClaves.validar_fortaleza(v)

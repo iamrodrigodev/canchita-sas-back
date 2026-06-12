@@ -3,6 +3,7 @@ from pydantic_core import PydanticCustomError
 from app.core.security.sanitizador_entrada import SanitizadorDeEntrada
 from app.modules.usuarios.schemas.validaciones import UsuarioValidacionConstantes
 from app.modules.ubicacion.schemas.validaciones import UbicacionValidacionConstantes
+from app.core.security.validador_claves import ValidadorClaves
 
 
 class RegistroPeticion(BaseModel):
@@ -62,13 +63,7 @@ class RegistroPeticion(BaseModel):
     @field_validator('clave')
     @classmethod
     def validar_clave(cls, v):
-        if not v or len(v) < UsuarioValidacionConstantes.CLAVE_MIN:
-            raise PydanticCustomError(
-                'value_error',
-                'La clave debe tener al menos {min} caracteres',
-                {'min': UsuarioValidacionConstantes.CLAVE_MIN}
-            )
-        return v
+        return ValidadorClaves.validar_fortaleza(v)
 
     @field_validator('codigo_postal')
     @classmethod

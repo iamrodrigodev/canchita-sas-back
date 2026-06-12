@@ -2,7 +2,7 @@ class UsuarioValidacionConstantes:
     NOMBRE_MAX = 100
     APELLIDOS_MAX = 100
     CORREO_MAX = 150
-    CLAVE_MIN = 6
+    CLAVE_MIN = 8
     CLAVE_MAX = 255
     TELEFONO_MAX = 12
     DIRECCION_MAX = 255
