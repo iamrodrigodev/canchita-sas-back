@@ -7,7 +7,7 @@ def configurar_cors(app: FastAPI):
     allow_origins = ajustes.cors_origenes_lista
 
     if allow_credentials and "*" in allow_origins:
-        allow_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+        raise ValueError("CORS_CREDENCIALES no puede ser True si CORS_ORIGENES incluye '*'. Especifique los orígenes exactos en su archivo .env.")
 
     app.add_middleware(
         CORSMiddleware,
