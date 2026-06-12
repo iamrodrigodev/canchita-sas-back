@@ -1,0 +1,22 @@
+# EditorConfig ayuda a los desarrolladores a definir y mantener estilos de codificación consistentes
+# entre diferentes editores e IDEs.
+# top-most EditorConfig file
+root = true
+
+# Reglas para todos los archivos
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Reglas específicas para Python
+[*.py]
+indent_style = space
+indent_size = 4
+
+# Reglas para archivos de configuración, web y Markdown
+[*.{json,yaml,yml,html,css,js,md}]
+indent_size = 2
