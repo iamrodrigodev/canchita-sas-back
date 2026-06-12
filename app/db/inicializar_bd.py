@@ -14,6 +14,9 @@ from app.modules.autenticacion.models.credencial_usuario import CredencialUsuari
 from app.modules.autenticacion.models.estado_login_usuario import EstadoLoginUsuario
 from app.modules.autenticacion.models.token_recuperacion_clave import TokenRecuperacionClave
 from app.modules.estado.models.registro_auditoria import RegistroAuditoria
+from app.modules.empresas.models.empresa import Empresa
+from app.modules.empresas.models.rol_empresa import RolEmpresa
+from app.modules.empresas.models.usuario_empresa import UsuarioEmpresa
 import logging
 from app.core.config.ajustes import ajustes
 
@@ -29,6 +32,9 @@ _ = (
     EstadoLoginUsuario,
     TokenRecuperacionClave,
     RegistroAuditoria,
+    Empresa,
+    RolEmpresa,
+    UsuarioEmpresa,
 )
 
 logger = logging.getLogger("fastapi")
@@ -58,6 +64,7 @@ async def _asegurar_esquemas():
             await conn.execute(text("CREATE SCHEMA IF NOT EXISTS autenticacion;"))
             await conn.execute(text("CREATE SCHEMA IF NOT EXISTS ubicacion;"))
             await conn.execute(text("CREATE SCHEMA IF NOT EXISTS estado;"))
+            await conn.execute(text("CREATE SCHEMA IF NOT EXISTS empresas;"))
             logger.info("Esquemas verificados")
         except SQLAlchemyError as e:
             logger.error(f"Error al crear esquemas: {str(e)}")
@@ -104,12 +111,36 @@ async def sembrar_usuarios_base():
                 raise
 
 
+async def sembrar_roles_empresa():
+    async with SessionLocal() as session:
+        try:
+            roles = ['ADMIN_EMPRESA', 'CAJERO', 'CLIENTE']
+            for rol_nombre in roles:
+                result = await session.execute(
+                    text("SELECT id FROM empresas.roles_empresa WHERE nombre = :nombre"),
+                    {'nombre': rol_nombre}
+                )
+                if not result.scalar():
+                    await session.execute(
+                        text("INSERT INTO empresas.roles_empresa (nombre) VALUES (:nombre)"),
+                        {'nombre': rol_nombre}
+                    )
+            await session.commit()
+            logger.info("Roles de empresa semilla verificados exitosamente")
+        except SQLAlchemyError as e:
+            await session.rollback()
+            logger.error(f"Error al cargar roles de empresa: {str(e)}")
+            if ajustes.DB_FAIL_FAST:
+                raise
+
+
 async def inicializar_datos():
     await _asegurar_esquemas()
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     await cargar_catalogos_sql()
     await sembrar_usuarios_base()
+    await sembrar_roles_empresa()
 
 
 if __name__ == "__main__":

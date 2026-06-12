@@ -34,6 +34,7 @@ class Usuario(Base):
     rol = relationship('Rol', backref=backref('usuarios', lazy='dynamic'))
 
     direccion = relationship('UsuarioDireccion', back_populates='usuario', uselist=False, cascade="all, delete-orphan")
+    empresas_asignadas = relationship('UsuarioEmpresa', back_populates='usuario', cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<Usuario {self.correo}>'
