@@ -4,6 +4,7 @@ from app.core.security.servicio_jwt import ServicioJwt
 from app.modules.usuarios.repositories.usuario_repository import UsuarioRepository
 from app.core.exceptions.errores_personalizados import ExcepcionDeNegocio
 from app.core.exceptions.mensajes_error import MensajesDeError
+from app.modules.usuarios.enums.roles_sistema import RolesSistema
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/autenticacion/iniciar-sesion")
 
@@ -37,7 +38,7 @@ def requiere_rol(rol_nombre: str):
 
 
 def verificar_propietario_o_admin(usuario_objetivo_id: int, usuario_actual) -> None:
-    es_admin = usuario_actual.rol and usuario_actual.rol.nombre == "ADMINISTRADOR"
+    es_admin = usuario_actual.rol and usuario_actual.rol.nombre == RolesSistema.ADMINISTRADOR.value
     es_propietario = int(usuario_actual.id) == int(usuario_objetivo_id)
     if not (es_admin or es_propietario):
         raise ExcepcionDeNegocio(MensajesDeError.RECURSO_AJENO)
