@@ -1,12 +1,15 @@
-﻿from app.utils.tiempo_util import TiempoUtil
-from sqlalchemy import Column, BigInteger, String, DateTime, Boolean, ForeignKey
+from app.utils.tiempo_util import TiempoUtil
+from sqlalchemy import Column, BigInteger, String, DateTime, Boolean, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from app.db.sesion import Base
 
 
 class TokenRefresco(Base):
     __tablename__ = "tokens_refresco"
-    __table_args__ = {"schema": "autenticacion"}
+    __table_args__ = (
+        Index('ix_tokens_refresco_expiracion', 'expira_en', 'revocado'),
+        {"schema": "autenticacion"}
+    )
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     usuario_id = Column(BigInteger, ForeignKey("autenticacion.usuarios.id"), nullable=False, index=True)

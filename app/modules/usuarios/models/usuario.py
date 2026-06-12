@@ -1,12 +1,15 @@
-﻿from app.utils.tiempo_util import TiempoUtil
-from sqlalchemy import Column, String, BigInteger, SmallInteger, DateTime, ForeignKey
+from app.utils.tiempo_util import TiempoUtil
+from sqlalchemy import Column, String, BigInteger, SmallInteger, DateTime, ForeignKey, Index
 from sqlalchemy.orm import relationship, backref
 from app.db.sesion import Base
 from app.modules.usuarios.schemas.validaciones import UsuarioValidacionConstantes
 
 class Usuario(Base):
     __tablename__ = 'usuarios'
-    __table_args__ = {'schema': 'autenticacion'}
+    __table_args__ = (
+        Index('ix_usuarios_rol_estado', 'rol_id', 'estado'),
+        {'schema': 'autenticacion'}
+    )
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     nombre = Column(String(UsuarioValidacionConstantes.NOMBRE_MAX), nullable=False)

@@ -1,10 +1,13 @@
-from sqlalchemy import Column, String, BigInteger, DateTime, JSON
+from sqlalchemy import Column, String, BigInteger, DateTime, JSON, Index
 from app.db.sesion import Base
 from app.utils.tiempo_util import TiempoUtil
 
 class RegistroAuditoria(Base):
     __tablename__ = 'registros_auditoria'
-    __table_args__ = {'schema': 'estado'}
+    __table_args__ = (
+        Index('ix_auditoria_evento_fecha', 'evento', 'fecha_registro'),
+        {'schema': 'estado'}
+    )
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     evento = Column(String(100), nullable=False)
