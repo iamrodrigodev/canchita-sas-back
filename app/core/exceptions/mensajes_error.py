@@ -19,6 +19,11 @@ class MensajesDeError(Enum):
     NO_PUEDE_AUTODESACTIVARSE = ("No puede desactivar su propio usuario", 400)
     DEMASIADOS_INTENTOS = ("Demasiados intentos. Intente nuevamente.", 429)
     DEMASIADAS_SOLICITUDES = ("Demasiadas solicitudes. Intente nuevamente.", 429)
+    FALLO_AUTENTICACION = ("Fallo en la autenticación, intente nuevamente", 401)
+    USUARIO_INACTIVO = ("Usuario inactivo", 401)
+    SIN_PERMISOS = ("Acceso denegado: no tiene los permisos necesarios", 403)
+    RECURSO_AJENO = ("Acceso denegado: no puede acceder a recursos de otro usuario", 403)
+    JWT_CLAVE_MUY_CORTA = ("JWT_SECRET_KEY debe tener al menos 32 caracteres.", 500)
 
     def __init__(self, mensaje, codigo):
         self.mensaje = mensaje
