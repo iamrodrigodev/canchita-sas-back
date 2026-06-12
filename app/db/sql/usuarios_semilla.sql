@@ -1,6 +1,6 @@
 -- Insertar Roles Base
-INSERT INTO autenticacion.roles (id, nombre) VALUES (1, 'ADMINISTRADOR') ON CONFLICT (nombre) DO NOTHING;
-INSERT INTO autenticacion.roles (id, nombre) VALUES (2, 'USUARIO') ON CONFLICT (nombre) DO NOTHING;
+INSERT INTO autenticacion.roles (id, nombre) VALUES (1, 'SUPER_ADMIN') ON CONFLICT (nombre) DO NOTHING;
+INSERT INTO autenticacion.roles (id, nombre) VALUES (2, 'USUARIO_COMUN') ON CONFLICT (nombre) DO NOTHING;
 
 -- Las contraseñas estan hasheadas usando bcrypt (soportado nativamente por nuestro passlib).
 -- La contraseña para ambas cuentas es: Admin123!

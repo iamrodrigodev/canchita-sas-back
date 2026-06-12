@@ -19,7 +19,7 @@ from app.modules.usuarios.services.usuario_service import IUsuarioService
 usuarios_gestion_router = APIRouter()
 
 
-@usuarios_gestion_router.post('', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
+@usuarios_gestion_router.post('', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
 async def crear_usuario_gestion(
     peticion: UsuarioGestionCrearPeticion,
     administrador_id: int = Depends(obtener_usuario_actual_id),
@@ -29,7 +29,7 @@ async def crear_usuario_gestion(
     return ApiDeRespuesta.creado(MensajesDeConfirmacion.USUARIO_CREADO, respuesta.model_dump())
 
 
-@usuarios_gestion_router.get('', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
+@usuarios_gestion_router.get('', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
 async def listar_usuarios_gestion(
     pagina: int = Query(default=SistemaConstantes.PAGINACION_PAGINA_DEFECTO),
     tamano: int = Query(default=SistemaConstantes.PAGINACION_TAMANO_DEFECTO),
@@ -42,7 +42,7 @@ async def listar_usuarios_gestion(
     return ApiDeRespuesta.exito(MensajesDeConfirmacion.DATOS_OBTENIDOS, respuesta.model_dump())
 
 
-@usuarios_gestion_router.get('/{usuario_id}', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
+@usuarios_gestion_router.get('/{usuario_id}', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
 async def obtener_usuario_gestion(
     usuario_id: int,
     servicio_usuario: IUsuarioService = Depends(get_usuario_service),
@@ -51,7 +51,7 @@ async def obtener_usuario_gestion(
     return ApiDeRespuesta.exito(MensajesDeConfirmacion.DATOS_OBTENIDOS, respuesta.model_dump())
 
 
-@usuarios_gestion_router.put('/{usuario_id}', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
+@usuarios_gestion_router.put('/{usuario_id}', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
 async def actualizar_usuario_gestion(
     usuario_id: int,
     peticion: UsuarioGestionActualizarPeticion,
@@ -62,7 +62,7 @@ async def actualizar_usuario_gestion(
     return ApiDeRespuesta.exito(MensajesDeConfirmacion.USUARIO_ACTUALIZADO, respuesta.model_dump())
 
 
-@usuarios_gestion_router.patch('/{usuario_id}/estado', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
+@usuarios_gestion_router.patch('/{usuario_id}/estado', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
 async def cambiar_estado_usuario_gestion(
     usuario_id: int,
     peticion: UsuarioGestionEstadoPeticion,
@@ -73,7 +73,7 @@ async def cambiar_estado_usuario_gestion(
     return ApiDeRespuesta.exito(MensajesDeConfirmacion.ESTADO_ACTUALIZADO, respuesta.model_dump())
 
 
-@usuarios_gestion_router.delete('/{usuario_id}', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
+@usuarios_gestion_router.delete('/{usuario_id}', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
 async def eliminar_logico_usuario_gestion(
     usuario_id: int,
     administrador_id: int = Depends(obtener_usuario_actual_id),

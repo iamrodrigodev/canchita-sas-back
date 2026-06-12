@@ -38,7 +38,7 @@ def requiere_rol(rol_nombre: str):
 
 
 def verificar_propietario_o_admin(usuario_objetivo_id: int, usuario_actual) -> None:
-    es_admin = usuario_actual.rol and usuario_actual.rol.nombre == RolesSistema.ADMINISTRADOR.value
+    es_admin = usuario_actual.rol and usuario_actual.rol.nombre == RolesSistema.SUPER_ADMIN.value
     es_propietario = int(usuario_actual.id) == int(usuario_objetivo_id)
     if not (es_admin or es_propietario):
         raise ExcepcionDeNegocio(MensajesDeError.RECURSO_AJENO)
@@ -67,3 +67,32 @@ async def obtener_usuario_actual_opcional(authorization: str | None = Header(def
         return None
     return usuario
 
+from fastapi import Path
+
+def requiere_rol_empresa(rol_nombre: str):
+    """
+    Guardián Multi-Tenant (SaaS).
+    Verifica que el usuario actual tenga el rol específico dentro de la empresa indicada en la URL (empresa_id).
+    """
+    def verificador_rol_empresa(
+        empresa_id: int = Path(..., description="ID de la empresa del tenant"),
+        usuario=Depends(obtener_usuario_actual)
+    ):
+        # El usuario es un SUPER_ADMIN global (acceso dios)
+        if usuario.rol and usuario.rol.nombre == RolesSistema.SUPER_ADMIN.value:
+            return usuario
+            
+        # Buscar en las empresas asignadas al usuario
+        empresa_encontrada = False
+        for asignacion in getattr(usuario, 'empresas_asignadas', []):
+            if int(asignacion.empresa_id) == int(empresa_id) and asignacion.estado == 1:
+                if asignacion.rol_empresa and asignacion.rol_empresa.nombre == rol_nombre:
+                    empresa_encontrada = True
+                    break
+        
+        if not empresa_encontrada:
+            raise ExcepcionDeNegocio(MensajesDeError.SIN_PERMISOS)
+            
+        return usuario
+
+    return verificador_rol_empresa

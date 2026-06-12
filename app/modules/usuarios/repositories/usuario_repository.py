@@ -9,6 +9,7 @@ from app.modules.ubicacion.models.distrito import Distrito
 from app.modules.ubicacion.models.provincia import Provincia
 from app.modules.usuarios.models.usuario import Usuario
 from app.modules.usuarios.models.usuario_direccion import UsuarioDireccion
+from app.modules.empresas.models.usuario_empresa import UsuarioEmpresa
 from app.utils.datos_sensibles import enmascarar_correo
 
 logger = logging.getLogger("fastapi")
@@ -25,6 +26,8 @@ class UsuarioRepository:
                 .selectinload(UsuarioDireccion.distrito)
                 .selectinload(Distrito.provincia)
                 .selectinload(Provincia.departamento),
+                selectinload(Usuario.empresas_asignadas)
+                .selectinload(UsuarioEmpresa.rol_empresa),
             )
         )
 
