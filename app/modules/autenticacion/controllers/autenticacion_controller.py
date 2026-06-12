@@ -72,7 +72,7 @@ async def solicitar_recuperacion_clave(
     servicio_auth: IAutenticacionService = Depends(get_autenticacion_service)
 ):
     await servicio_auth.solicitar_recuperacion_clave(peticion)
-    return ApiDeRespuesta.exito("Si el correo existe, se enviara un enlace de recuperacion")
+    return ApiDeRespuesta.exito(MensajesDeConfirmacion.ENLACE_RECUPERACION_ENVIADO)
 
 
 @autenticacion_router.post('/restablecer-clave')
@@ -81,6 +81,6 @@ async def restablecer_clave(
     servicio_auth: IAutenticacionService = Depends(get_autenticacion_service)
 ):
     await servicio_auth.restablecer_clave(peticion)
-    return ApiDeRespuesta.exito("Clave restablecida exitosamente")
+    return ApiDeRespuesta.exito(MensajesDeConfirmacion.CLAVE_RESTABLECIDA)
 
 

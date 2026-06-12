@@ -8,3 +8,5 @@ class MensajesDeConfirmacion(Enum):
     DATOS_OBTENIDOS = "Datos obtenidos exitosamente"
     SESION_CERRADA = "Sesión cerrada exitosamente"
     SISTEMA_EN_LINEA = "Sistema en línea y funcionando"
+    ENLACE_RECUPERACION_ENVIADO = "Si el correo existe, se enviará un enlace de recuperación"
+    CLAVE_RESTABLECIDA = "Clave restablecida exitosamente"
