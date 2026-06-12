@@ -24,6 +24,7 @@ class MensajesDeError(Enum):
     SIN_PERMISOS = ("Acceso denegado: no tiene los permisos necesarios", 403)
     RECURSO_AJENO = ("Acceso denegado: no puede acceder a recursos de otro usuario", 403)
     JWT_CLAVE_MUY_CORTA = ("JWT_SECRET_KEY debe tener al menos 32 caracteres.", 500)
+    CORS_ORIGEN_INVALIDO = ("CORS_CREDENCIALES no puede ser True si CORS_ORIGENES incluye '*'. Especifique los orígenes exactos en su archivo .env.", 500)
 
     def __init__(self, mensaje, codigo):
         self.mensaje = mensaje
