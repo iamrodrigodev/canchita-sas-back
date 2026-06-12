@@ -7,7 +7,7 @@ from app.core.security.seguridad import (
     obtener_usuario_actual,
     obtener_usuario_actual_id,
     requiere_rol,
-    verificar_propietario_o_admin,
+    verificador_propietario_o_admin_dep,
 )
 from app.modules.usuarios.schemas.esquemas_usuario_gestion_peticion import (
     UsuarioGestionActualizarPeticion,
@@ -32,10 +32,9 @@ async def obtener_mi_perfil(
 @usuario_router.get('/{usuario_id}/perfil')
 async def obtener_perfil_por_usuario_id(
     usuario_id: int,
-    usuario_actual=Depends(obtener_usuario_actual),
+    _auth=Depends(verificador_propietario_o_admin_dep),
     servicio_usuario: IUsuarioService = Depends(get_usuario_service)
 ):
-    verificar_propietario_o_admin(usuario_id, usuario_actual)
     respuesta = await servicio_usuario.obtener_perfil_por_id(usuario_id)
     return ApiDeRespuesta.exito(MensajesDeConfirmacion.DATOS_OBTENIDOS, respuesta.model_dump())
 

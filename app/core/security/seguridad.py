@@ -60,6 +60,11 @@ def verificar_propietario_o_admin(usuario_objetivo_id: int, usuario_actual) -> N
         )
 
 
+def verificador_propietario_o_admin_dep(usuario_id: int, usuario_actual=Depends(obtener_usuario_actual)):
+    verificar_propietario_o_admin(usuario_id, usuario_actual)
+    return usuario_actual
+
+
 def verificar_propietario(usuario_objetivo_id: int, usuario_actual) -> None:
     if int(usuario_actual.id) != int(usuario_objetivo_id):
         raise HTTPException(

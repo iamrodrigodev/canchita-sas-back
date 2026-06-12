@@ -1,4 +1,4 @@
-﻿from fastapi import Request
+from fastapi import Request
 from app.core.exceptions.errores_personalizados import ExcepcionDeNegocio
 from app.core.exceptions.mensajes_error import MensajesDeError
 from app.utils.rate_limit_util import limitador_memoria
@@ -36,6 +36,18 @@ def validar_rate_limit_recuperacion(request: Request, correo: str):
     if not limitador_memoria.permitido(f"recup_correo:{correo.lower()}", 6, 300):
         raise ExcepcionDeNegocio(MensajesDeError.ACCESO_DENEGADO, detalles="Demasiadas solicitudes. Intente nuevamente.")
 
+from app.modules.autenticacion.schemas.peticion.login_schema import LoginPeticion
+from app.modules.autenticacion.schemas.peticion.refrescar_token_schema import RefrescarTokenPeticion
+from app.modules.autenticacion.schemas.peticion.recuperacion_clave_schema import SolicitarRecuperacionClavePeticion
+
+def dep_rate_limit_login(request: Request, peticion: LoginPeticion):
+    validar_rate_limit_login(request, peticion.correo)
+
+def dep_rate_limit_refresh(request: Request, peticion: RefrescarTokenPeticion):
+    validar_rate_limit_refresh(request, peticion.token_refresco)
+
+def dep_rate_limit_recuperacion(request: Request, peticion: SolicitarRecuperacionClavePeticion):
+    validar_rate_limit_recuperacion(request, peticion.correo)
 
 def validar_rate_limit_inicio_aplicacion(request: Request, codigo: str):
     if ajustes.ENTORNO.lower() in {"test", "testing"}:
