@@ -1,0 +1,2021 @@
+{
+  "components": {
+    "schemas": {
+      "CodigoAccesoPeticion": {
+        "properties": {
+          "horas_vigencia": {
+            "default": 24,
+            "maximum": 720.0,
+            "minimum": 1.0,
+            "title": "Horas Vigencia",
+            "type": "integer"
+          },
+          "usos_maximos": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Usos Maximos"
+          },
+          "version_instrumento_id": {
+            "title": "Version Instrumento Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version_instrumento_id"
+        ],
+        "title": "CodigoAccesoPeticion",
+        "type": "object"
+      },
+      "ConfiguracionPsicologoPeticion": {
+        "properties": {
+          "permitir_auto_completado": {
+            "default": true,
+            "title": "Permitir Auto Completado",
+            "type": "boolean"
+          },
+          "solicitar_documento_paciente": {
+            "default": false,
+            "title": "Solicitar Documento Paciente",
+            "type": "boolean"
+          },
+          "solicitar_telefono_paciente": {
+            "default": false,
+            "title": "Solicitar Telefono Paciente",
+            "type": "boolean"
+          },
+          "tiempo_advertencia_segundos": {
+            "default": 5,
+            "maximum": 120.0,
+            "minimum": 0.0,
+            "title": "Tiempo Advertencia Segundos",
+            "type": "integer"
+          },
+          "tiempo_por_pregunta_segundos": {
+            "default": 20,
+            "maximum": 600.0,
+            "minimum": 5.0,
+            "title": "Tiempo Por Pregunta Segundos",
+            "type": "integer"
+          }
+        },
+        "title": "ConfiguracionPsicologoPeticion",
+        "type": "object"
+      },
+      "FinalizarAplicacionPeticion": {
+        "properties": {
+          "aplicacion_id": {
+            "title": "Aplicacion Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "aplicacion_id"
+        ],
+        "title": "FinalizarAplicacionPeticion",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "IniciarAplicacionPeticion": {
+        "properties": {
+          "codigo": {
+            "maxLength": 20,
+            "minLength": 4,
+            "title": "Codigo",
+            "type": "string"
+          },
+          "documento_paciente": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Documento Paciente"
+          },
+          "nombre_paciente": {
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Nombre Paciente",
+            "type": "string"
+          },
+          "telefono_paciente": {
+            "anyOf": [
+              {
+                "maxLength": 30,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Telefono Paciente"
+          }
+        },
+        "required": [
+          "codigo",
+          "nombre_paciente"
+        ],
+        "title": "IniciarAplicacionPeticion",
+        "type": "object"
+      },
+      "LoginPeticion": {
+        "properties": {
+          "clave": {
+            "title": "Clave",
+            "type": "string"
+          },
+          "correo": {
+            "title": "Correo",
+            "type": "string"
+          }
+        },
+        "required": [
+          "correo",
+          "clave"
+        ],
+        "title": "LoginPeticion",
+        "type": "object"
+      },
+      "RefrescarTokenPeticion": {
+        "properties": {
+          "token_refresco": {
+            "minLength": 20,
+            "title": "Token Refresco",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token_refresco"
+        ],
+        "title": "RefrescarTokenPeticion",
+        "type": "object"
+      },
+      "RegistroPeticion": {
+        "properties": {
+          "apellidos": {
+            "maxLength": 100,
+            "title": "Apellidos",
+            "type": "string"
+          },
+          "clave": {
+            "maxLength": 255,
+            "minLength": 6,
+            "title": "Clave",
+            "type": "string"
+          },
+          "codigo_postal": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Codigo Postal"
+          },
+          "correo": {
+            "format": "email",
+            "title": "Correo",
+            "type": "string"
+          },
+          "direccion": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direccion"
+          },
+          "distrito_id": {
+            "anyOf": [
+              {
+                "maxLength": 6,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distrito Id"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "referencia": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referencia"
+          },
+          "telefono": {
+            "anyOf": [
+              {
+                "maxLength": 12,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Telefono"
+          }
+        },
+        "required": [
+          "nombre",
+          "apellidos",
+          "correo",
+          "clave"
+        ],
+        "title": "RegistroPeticion",
+        "type": "object"
+      },
+      "ResponderPreguntaPeticion": {
+        "properties": {
+          "aplicacion_id": {
+            "title": "Aplicacion Id",
+            "type": "integer"
+          },
+          "auto_completada": {
+            "default": false,
+            "title": "Auto Completada",
+            "type": "boolean"
+          },
+          "opcion_codigo": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Opcion Codigo",
+            "type": "string"
+          },
+          "pregunta_id": {
+            "title": "Pregunta Id",
+            "type": "integer"
+          },
+          "tiempo_respuesta_segundos": {
+            "default": 0,
+            "maximum": 3600.0,
+            "minimum": 0.0,
+            "title": "Tiempo Respuesta Segundos",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "aplicacion_id",
+          "pregunta_id",
+          "opcion_codigo"
+        ],
+        "title": "ResponderPreguntaPeticion",
+        "type": "object"
+      },
+      "RestablecerClavePeticion": {
+        "properties": {
+          "nueva_clave": {
+            "maxLength": 255,
+            "minLength": 6,
+            "title": "Nueva Clave",
+            "type": "string"
+          },
+          "token_recuperacion": {
+            "minLength": 20,
+            "title": "Token Recuperacion",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token_recuperacion",
+          "nueva_clave"
+        ],
+        "title": "RestablecerClavePeticion",
+        "type": "object"
+      },
+      "SolicitarRecuperacionClavePeticion": {
+        "properties": {
+          "correo": {
+            "title": "Correo",
+            "type": "string"
+          }
+        },
+        "required": [
+          "correo"
+        ],
+        "title": "SolicitarRecuperacionClavePeticion",
+        "type": "object"
+      },
+      "UsuarioGestionActualizarPeticion": {
+        "properties": {
+          "apellidos": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Apellidos",
+            "type": "string"
+          },
+          "correo": {
+            "format": "email",
+            "title": "Correo",
+            "type": "string"
+          },
+          "estado": {
+            "default": 1,
+            "title": "Estado",
+            "type": "integer"
+          },
+          "foto_url": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Foto Url"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "rol_id": {
+            "title": "Rol Id",
+            "type": "integer"
+          },
+          "telefono": {
+            "anyOf": [
+              {
+                "maxLength": 12,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Telefono"
+          }
+        },
+        "required": [
+          "nombre",
+          "apellidos",
+          "correo",
+          "rol_id"
+        ],
+        "title": "UsuarioGestionActualizarPeticion",
+        "type": "object"
+      },
+      "UsuarioGestionCrearPeticion": {
+        "properties": {
+          "apellidos": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Apellidos",
+            "type": "string"
+          },
+          "correo": {
+            "format": "email",
+            "title": "Correo",
+            "type": "string"
+          },
+          "estado": {
+            "default": 1,
+            "title": "Estado",
+            "type": "integer"
+          },
+          "foto_url": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Foto Url"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Nombre",
+            "type": "string"
+          },
+          "rol_id": {
+            "title": "Rol Id",
+            "type": "integer"
+          },
+          "telefono": {
+            "anyOf": [
+              {
+                "maxLength": 12,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Telefono"
+          }
+        },
+        "required": [
+          "nombre",
+          "apellidos",
+          "correo",
+          "rol_id"
+        ],
+        "title": "UsuarioGestionCrearPeticion",
+        "type": "object"
+      },
+      "UsuarioGestionEstadoPeticion": {
+        "properties": {
+          "estado": {
+            "title": "Estado",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "estado"
+        ],
+        "title": "UsuarioGestionEstadoPeticion",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "api/autenticacion/iniciar-sesion"
+          }
+        },
+        "type": "oauth2"
+      }
+    }
+  },
+  "info": {
+    "description": "Arquetipo Idiomatico Escalable de FastAPI",
+    "title": "FastAPI Arquetipo",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/autenticacion/cerrar-sesion": {
+      "post": {
+        "operationId": "cerrar_sesion_api_autenticacion_cerrar_sesion_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefrescarTokenPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cerrar Sesion",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/autenticacion/cerrar-sesion-todos": {
+      "post": {
+        "operationId": "cerrar_sesion_todos_api_autenticacion_cerrar_sesion_todos_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Cerrar Sesion Todos",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/autenticacion/iniciar-sesion": {
+      "post": {
+        "operationId": "iniciar_sesion_api_autenticacion_iniciar_sesion_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Iniciar Sesion",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/autenticacion/refrescar-token": {
+      "post": {
+        "operationId": "refrescar_token_api_autenticacion_refrescar_token_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefrescarTokenPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Refrescar Token",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/autenticacion/registrar-cuenta": {
+      "post": {
+        "operationId": "registrar_cuenta_api_autenticacion_registrar_cuenta_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Registrar Cuenta",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/autenticacion/restablecer-clave": {
+      "post": {
+        "operationId": "restablecer_clave_api_autenticacion_restablecer_clave_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestablecerClavePeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Restablecer Clave",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/autenticacion/solicitar-recuperacion-clave": {
+      "post": {
+        "operationId": "solicitar_recuperacion_clave_api_autenticacion_solicitar_recuperacion_clave_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitarRecuperacionClavePeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Solicitar Recuperacion Clave",
+        "tags": [
+          "Autenticacion"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones": {
+      "get": {
+        "operationId": "listar_aplicaciones_psicologo_api_evaluaciones_aplicaciones_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "estado",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Estado"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pagina",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Pagina",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tamano",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Tamano",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Listar Aplicaciones Psicologo",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones/finalizar": {
+      "post": {
+        "operationId": "finalizar_aplicacion_api_evaluaciones_aplicaciones_finalizar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinalizarAplicacionPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Finalizar Aplicacion",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones/iniciar": {
+      "post": {
+        "operationId": "iniciar_aplicacion_api_evaluaciones_aplicaciones_iniciar_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IniciarAplicacionPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Iniciar Aplicacion",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones/responder": {
+      "post": {
+        "operationId": "responder_pregunta_api_evaluaciones_aplicaciones_responder_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponderPreguntaPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Responder Pregunta",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones/{aplicacion_id}": {
+      "get": {
+        "operationId": "obtener_detalle_aplicacion_api_evaluaciones_aplicaciones__aplicacion_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "aplicacion_id",
+            "required": true,
+            "schema": {
+              "title": "Aplicacion Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Obtener Detalle Aplicacion",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones/{aplicacion_id}/reporte": {
+      "get": {
+        "operationId": "descargar_reporte_aplicacion_api_evaluaciones_aplicaciones__aplicacion_id__reporte_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "aplicacion_id",
+            "required": true,
+            "schema": {
+              "title": "Aplicacion Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Descargar Reporte Aplicacion",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/aplicaciones/{aplicacion_id}/resultado": {
+      "get": {
+        "operationId": "obtener_resultado_aplicacion_api_evaluaciones_aplicaciones__aplicacion_id__resultado_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "aplicacion_id",
+            "required": true,
+            "schema": {
+              "title": "Aplicacion Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Obtener Resultado Aplicacion",
+        "tags": [
+          "Evaluaciones"
+        ]
+      },
+      "post": {
+        "operationId": "calcular_resultado_aplicacion_api_evaluaciones_aplicaciones__aplicacion_id__resultado_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "aplicacion_id",
+            "required": true,
+            "schema": {
+              "title": "Aplicacion Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Calcular Resultado Aplicacion",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/codigos": {
+      "post": {
+        "operationId": "crear_codigo_acceso_api_evaluaciones_codigos_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodigoAccesoPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Crear Codigo Acceso",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/configuracion": {
+      "put": {
+        "operationId": "guardar_configuracion_psicologo_api_evaluaciones_configuracion_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfiguracionPsicologoPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Guardar Configuracion Psicologo",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/resultados": {
+      "get": {
+        "operationId": "listar_resultados_psicologo_api_evaluaciones_resultados_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pagina",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Pagina",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tamano",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Tamano",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Listar Resultados Psicologo",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/evaluaciones/versiones/{version_instrumento_id}/preguntas": {
+      "get": {
+        "operationId": "listar_preguntas_por_version_api_evaluaciones_versiones__version_instrumento_id__preguntas_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "version_instrumento_id",
+            "required": true,
+            "schema": {
+              "title": "Version Instrumento Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Listar Preguntas Por Version",
+        "tags": [
+          "Evaluaciones"
+        ]
+      }
+    },
+    "/api/metricas": {
+      "get": {
+        "operationId": "obtener_metricas_api_metricas_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Obtener Metricas",
+        "tags": [
+          "Metricas"
+        ]
+      }
+    },
+    "/api/paciente/evaluaciones": {
+      "get": {
+        "operationId": "listar_evaluaciones_paciente_api_paciente_evaluaciones_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pagina",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Pagina",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tamano",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Tamano",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Listar Evaluaciones Paciente",
+        "tags": [
+          "Paciente"
+        ]
+      }
+    },
+    "/api/paciente/evaluaciones/{aplicacion_id}": {
+      "get": {
+        "operationId": "detalle_evaluacion_paciente_api_paciente_evaluaciones__aplicacion_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "aplicacion_id",
+            "required": true,
+            "schema": {
+              "title": "Aplicacion Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Detalle Evaluacion Paciente",
+        "tags": [
+          "Paciente"
+        ]
+      }
+    },
+    "/api/paciente/resultados": {
+      "get": {
+        "operationId": "listar_resultados_paciente_api_paciente_resultados_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pagina",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Pagina",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tamano",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "title": "Tamano",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Listar Resultados Paciente",
+        "tags": [
+          "Paciente"
+        ]
+      }
+    },
+    "/api/paciente/resultados/{aplicacion_id}": {
+      "get": {
+        "operationId": "detalle_resultado_paciente_api_paciente_resultados__aplicacion_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "aplicacion_id",
+            "required": true,
+            "schema": {
+              "title": "Aplicacion Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Detalle Resultado Paciente",
+        "tags": [
+          "Paciente"
+        ]
+      }
+    },
+    "/api/salud": {
+      "get": {
+        "operationId": "verificar_salud_api_salud_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Verificar Salud",
+        "tags": [
+          "Salud"
+        ]
+      }
+    },
+    "/api/usuario/perfil": {
+      "get": {
+        "operationId": "obtener_mi_perfil_api_usuario_perfil_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Obtener Mi Perfil",
+        "tags": [
+          "Usuario"
+        ]
+      }
+    },
+    "/api/usuario/{usuario_id}/perfil": {
+      "get": {
+        "operationId": "obtener_perfil_por_usuario_id_api_usuario__usuario_id__perfil_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "required": true,
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Obtener Perfil Por Usuario Id",
+        "tags": [
+          "Usuario"
+        ]
+      }
+    },
+    "/api/usuarios": {
+      "get": {
+        "operationId": "listar_usuarios_gestion_api_usuarios_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pagina",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "Pagina",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "tamano",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "title": "Tamano",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "correo",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Correo"
+            }
+          },
+          {
+            "in": "query",
+            "name": "rol",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rol"
+            }
+          },
+          {
+            "in": "query",
+            "name": "estado",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Estado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Listar Usuarios Gestion",
+        "tags": [
+          "Usuarios Gestion"
+        ]
+      },
+      "post": {
+        "operationId": "crear_usuario_gestion_api_usuarios_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioGestionCrearPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Crear Usuario Gestion",
+        "tags": [
+          "Usuarios Gestion"
+        ]
+      }
+    },
+    "/api/usuarios/{usuario_id}": {
+      "delete": {
+        "operationId": "eliminar_logico_usuario_gestion_api_usuarios__usuario_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "required": true,
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Eliminar Logico Usuario Gestion",
+        "tags": [
+          "Usuarios Gestion"
+        ]
+      },
+      "get": {
+        "operationId": "obtener_usuario_gestion_api_usuarios__usuario_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "required": true,
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Obtener Usuario Gestion",
+        "tags": [
+          "Usuarios Gestion"
+        ]
+      },
+      "put": {
+        "operationId": "actualizar_usuario_gestion_api_usuarios__usuario_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "required": true,
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioGestionActualizarPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Actualizar Usuario Gestion",
+        "tags": [
+          "Usuarios Gestion"
+        ]
+      }
+    },
+    "/api/usuarios/{usuario_id}/estado": {
+      "patch": {
+        "operationId": "cambiar_estado_usuario_gestion_api_usuarios__usuario_id__estado_patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "usuario_id",
+            "required": true,
+            "schema": {
+              "title": "Usuario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioGestionEstadoPeticion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "summary": "Cambiar Estado Usuario Gestion",
+        "tags": [
+          "Usuarios Gestion"
+        ]
+      }
+    }
+  }
+}

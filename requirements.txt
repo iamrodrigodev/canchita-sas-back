@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+asyncpg
+pyjwt
+pydantic
+email-validator
+pydantic-settings
+bcrypt
+bleach
+python-dotenv
+passlib[bcrypt]
+argon2-cffi==23.1.0
+pytest
+pytest-asyncio
+httpx
