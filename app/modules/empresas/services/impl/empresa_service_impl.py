@@ -22,7 +22,7 @@ class EmpresaServiceImpl(IEmpresaService):
             try:
                 # 1. Verificar si el subdominio o ruc ya existen
                 stmt_existe = select(Empresa).where(
-                    (Empresa.subdominio == peticion.subdominio) | 
+                    ((Empresa.subdominio == peticion.subdominio) & (Empresa.subdominio.is_not(None))) | 
                     ((Empresa.ruc == peticion.ruc) & (Empresa.ruc.is_not(None)))
                 )
                 existe = (await session.execute(stmt_existe)).scalars().first()

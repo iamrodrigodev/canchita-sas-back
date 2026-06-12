@@ -7,7 +7,7 @@ class EmpresaRespuesta(BaseModel):
     nombre_comercial: str
     razon_social: Optional[str]
     ruc: Optional[str]
-    subdominio: str
+    subdominio: Optional[str]
     estado: int
     fecha_creacion: datetime
 

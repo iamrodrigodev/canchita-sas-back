@@ -15,7 +15,7 @@ class Empresa(Base):
     nombre_comercial = Column(String(EmpresaValidacionConstantes.NOMBRE_COMERCIAL_MAX), nullable=False)
     razon_social = Column(String(EmpresaValidacionConstantes.RAZON_SOCIAL_MAX), nullable=True)
     ruc = Column(String(EmpresaValidacionConstantes.RUC_MAX), nullable=True, unique=True)
-    subdominio = Column(String(EmpresaValidacionConstantes.SUBDOMINIO_MAX), nullable=False, unique=True)
+    subdominio = Column(String(EmpresaValidacionConstantes.SUBDOMINIO_MAX), nullable=True, unique=True)
     
     estado = Column(SmallInteger, default=1)  # 1: Activo, 0: Inactivo, 2: Suspendido
     
