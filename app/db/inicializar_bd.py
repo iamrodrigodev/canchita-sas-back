@@ -13,6 +13,7 @@ from app.modules.autenticacion.models.token_refresco import TokenRefresco
 from app.modules.autenticacion.models.credencial_usuario import CredencialUsuario
 from app.modules.autenticacion.models.estado_login_usuario import EstadoLoginUsuario
 from app.modules.autenticacion.models.token_recuperacion_clave import TokenRecuperacionClave
+from app.modules.estado.models.registro_auditoria import RegistroAuditoria
 import logging
 from app.core.config.ajustes import ajustes
 
@@ -27,6 +28,7 @@ _ = (
     CredencialUsuario,
     EstadoLoginUsuario,
     TokenRecuperacionClave,
+    RegistroAuditoria,
 )
 
 logger = logging.getLogger("fastapi")

@@ -71,7 +71,7 @@ class AutenticacionServiceImpl(IAutenticacionService):
             expira_en=datetime.fromtimestamp(payload_refresco["exp"]),
         )
         await self.token_refresco_repo.guardar(token_entidad)
-        registrar_evento_auditoria("emision_tokens", "ok", usuario_id=usuario.id)
+        await registrar_evento_auditoria("emision_tokens", "ok", usuario_id=usuario.id)
 
         return self.mapper.de_usuario_a_inicio_sesion_respuesta(
             usuario,
@@ -140,7 +140,7 @@ class AutenticacionServiceImpl(IAutenticacionService):
             estado.ultimo_login_ok = ahora
             await self.seguridad_repo.guardar_estado_login(estado)
             logger.info(f"Inicio de sesion exitoso: {datos.correo}")
-            registrar_evento_auditoria("login", "ok", usuario_id=usuario.id)
+            await registrar_evento_auditoria("login", "ok", usuario_id=usuario.id)
             return await self._emitir_tokens_para_usuario(usuario)
 
         estado.intentos_fallidos = (estado.intentos_fallidos or 0) + 1
@@ -149,19 +149,19 @@ class AutenticacionServiceImpl(IAutenticacionService):
         await self.seguridad_repo.guardar_estado_login(estado)
 
         logger.warning(f"Credenciales invalidas para: {datos.correo}")
-        registrar_evento_auditoria("login", "fallido", correo=datos.correo)
+        await registrar_evento_auditoria("login", "fallido", correo=datos.correo)
         raise ExcepcionDeNegocio(MensajesDeError.CREDENCIALES_INVALIDAS)
 
     async def refrescar_token(self, datos):
         payload = self.jwt_service.obtener_payload(datos.token_refresco)
         if not payload or payload.get("tipo") != "refresco":
-            registrar_evento_auditoria("refresh_token", "fallido", motivo="payload_invalido")
+            await registrar_evento_auditoria("refresh_token", "fallido", motivo="payload_invalido")
             raise ExcepcionDeNegocio(MensajesDeError.CREDENCIALES_INVALIDAS)
 
         token_hash = self._hash_token(datos.token_refresco)
         token_bd = await self.token_refresco_repo.buscar_activo_por_hash(token_hash)
         if not token_bd:
-            registrar_evento_auditoria("refresh_token", "fallido", motivo="token_no_activo")
+            await registrar_evento_auditoria("refresh_token", "fallido", motivo="token_no_activo")
             raise ExcepcionDeNegocio(MensajesDeError.CREDENCIALES_INVALIDAS)
 
         usuario = await self.usuario_repo.buscar_por_id(int(payload["sub"]))
@@ -169,29 +169,29 @@ class AutenticacionServiceImpl(IAutenticacionService):
             raise ExcepcionDeNegocio(MensajesDeError.USUARIO_NO_ENCONTRADO)
 
         await self.token_refresco_repo.revocar_por_hash(token_hash)
-        registrar_evento_auditoria("refresh_token", "ok", usuario_id=usuario.id)
+        await registrar_evento_auditoria("refresh_token", "ok", usuario_id=usuario.id)
         return await self._emitir_tokens_para_usuario(usuario)
 
     async def cerrar_sesion(self, datos):
         token_hash = self._hash_token(datos.token_refresco)
         resultado = await self.token_refresco_repo.revocar_por_hash(token_hash)
-        registrar_evento_auditoria("cerrar_sesion", "ok", revocado=resultado)
+        await registrar_evento_auditoria("cerrar_sesion", "ok", revocado=resultado)
         return resultado
 
     async def cerrar_sesion_todos(self, usuario_id: int) -> int:
         total = await self.token_refresco_repo.revocar_todos_usuario(usuario_id)
-        registrar_evento_auditoria("cerrar_sesion_todos", "ok", usuario_id=usuario_id, tokens=total)
+        await registrar_evento_auditoria("cerrar_sesion_todos", "ok", usuario_id=usuario_id, tokens=total)
         return total
 
     async def limpiar_tokens_refresco(self) -> int:
         total = await self.token_refresco_repo.limpiar_expirados_y_revocados()
-        registrar_evento_auditoria("limpieza_tokens_refresco", "ok", eliminados=total)
+        await registrar_evento_auditoria("limpieza_tokens_refresco", "ok", eliminados=total)
         return total
 
     async def solicitar_recuperacion_clave(self, datos):
         usuario = await self.usuario_repo.buscar_por_correo(datos.correo.lower())
         if not usuario:
-            registrar_evento_auditoria("solicitar_recuperacion", "ok", correo=datos.correo, usuario_existe=False)
+            await registrar_evento_auditoria("solicitar_recuperacion", "ok", correo=datos.correo, usuario_existe=False)
             return True
 
         await self.seguridad_repo.revocar_tokens_recuperacion_usuario(usuario.id)
@@ -203,7 +203,7 @@ class AutenticacionServiceImpl(IAutenticacionService):
         )
         await self.seguridad_repo.guardar_token_recuperacion(token_entidad)
 
-        registrar_evento_auditoria("solicitar_recuperacion", "ok", usuario_id=usuario.id, usuario_existe=True)
+        await registrar_evento_auditoria("solicitar_recuperacion", "ok", usuario_id=usuario.id, usuario_existe=True)
         logger.info(f"[RECUPERACION_CLAVE_DEV] token_recuperacion={token_plano}")
         return True
 
@@ -211,7 +211,7 @@ class AutenticacionServiceImpl(IAutenticacionService):
         token_hash = self._hash_token(datos.token_recuperacion)
         token = await self.seguridad_repo.buscar_token_recuperacion_activo(token_hash)
         if not token:
-            registrar_evento_auditoria("restablecer_clave", "fallido", motivo="token_invalido")
+            await registrar_evento_auditoria("restablecer_clave", "fallido", motivo="token_invalido")
             raise ExcepcionDeNegocio(MensajesDeError.TOKEN_RECUPERACION_INVALIDO)
 
         credencial = await self._obtener_credencial(token.usuario_id)
@@ -224,7 +224,7 @@ class AutenticacionServiceImpl(IAutenticacionService):
         await self.seguridad_repo.marcar_token_recuperacion_como_usado(token.id)
         await self.token_refresco_repo.revocar_todos_usuario(token.usuario_id)
 
-        registrar_evento_auditoria("restablecer_clave", "ok", usuario_id=token.usuario_id)
+        await registrar_evento_auditoria("restablecer_clave", "ok", usuario_id=token.usuario_id)
         return True
 
     async def obtener_sesion(self, usuario):

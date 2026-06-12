@@ -1,4 +1,4 @@
-﻿import asyncio
+import asyncio
 from contextlib import asynccontextmanager
 
 import uvicorn
@@ -7,7 +7,6 @@ from fastapi import FastAPI
 from app.api.enrutador import registrar_rutas
 from app.core.config.ajustes import ajustes
 from app.core.config.logger import configurar_logs
-from app.core.config.metricas import MiddlewareMetricas
 from app.core.exceptions.excepciones_globales import registrar_manejadores_error
 from app.core.security.cors import configurar_cors
 from app.db.inicializar_bd import inicializar_datos
@@ -52,7 +51,6 @@ def crear_app() -> FastAPI:
 
     configurar_cors(app)
     configurar_logs(app)
-    app.add_middleware(MiddlewareMetricas)
 
     registrar_rutas(app)
     registrar_manejadores_error(app)
