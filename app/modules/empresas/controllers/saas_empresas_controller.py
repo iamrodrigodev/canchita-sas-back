@@ -21,3 +21,46 @@ async def crear_empresa_saas(
     """
     respuesta = await servicio.crear_empresa(peticion, saas_admin_id)
     return ApiDeRespuesta.creado("Empresa creada y asignada exitosamente", respuesta.model_dump())
+
+from fastapi import Query
+from app.core.config.sistema_constantes import SistemaConstantes
+from app.modules.empresas.schemas.peticion.empresa_gestion_peticion import EmpresaGestionActualizarPeticion, EmpresaGestionEstadoPeticion
+
+@saas_empresas_router.get('', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
+async def listar_empresas_saas(
+    pagina: int = Query(default=SistemaConstantes.PAGINACION_PAGINA_DEFECTO),
+    tamano: int = Query(default=SistemaConstantes.PAGINACION_TAMANO_DEFECTO),
+    busqueda: str | None = Query(default=None),
+    estado: int | None = Query(default=None),
+    servicio: IEmpresaService = Depends(get_empresa_service)
+):
+    respuesta = await servicio.listar_empresas(pagina, tamano, busqueda, estado)
+    return ApiDeRespuesta.exito(MensajesDeConfirmacion.DATOS_OBTENIDOS, respuesta.model_dump())
+
+@saas_empresas_router.get('/{empresa_id}', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
+async def obtener_empresa_saas(
+    empresa_id: int,
+    servicio: IEmpresaService = Depends(get_empresa_service)
+):
+    respuesta = await servicio.obtener_empresa(empresa_id)
+    return ApiDeRespuesta.exito(MensajesDeConfirmacion.DATOS_OBTENIDOS, respuesta.model_dump())
+
+@saas_empresas_router.put('/{empresa_id}', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
+async def actualizar_empresa_saas(
+    empresa_id: int,
+    peticion: EmpresaGestionActualizarPeticion,
+    saas_admin_id: int = Depends(obtener_usuario_actual_id),
+    servicio: IEmpresaService = Depends(get_empresa_service)
+):
+    respuesta = await servicio.actualizar_empresa(empresa_id, peticion, saas_admin_id)
+    return ApiDeRespuesta.exito("Empresa actualizada exitosamente", respuesta.model_dump())
+
+@saas_empresas_router.patch('/{empresa_id}/estado', dependencies=[Depends(requiere_rol(RolesSistema.SUPER_ADMIN.value))])
+async def cambiar_estado_empresa_saas(
+    empresa_id: int,
+    peticion: EmpresaGestionEstadoPeticion,
+    saas_admin_id: int = Depends(obtener_usuario_actual_id),
+    servicio: IEmpresaService = Depends(get_empresa_service)
+):
+    respuesta = await servicio.cambiar_estado_empresa(empresa_id, peticion.estado, saas_admin_id)
+    return ApiDeRespuesta.exito("Estado de empresa actualizado", respuesta.model_dump())

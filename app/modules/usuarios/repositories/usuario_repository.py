@@ -28,6 +28,8 @@ class UsuarioRepository:
                 .selectinload(Provincia.departamento),
                 selectinload(Usuario.empresas_asignadas)
                 .selectinload(UsuarioEmpresa.rol_empresa),
+                selectinload(Usuario.empresas_asignadas)
+                .selectinload(UsuarioEmpresa.empresa),
             )
         )
 

@@ -71,5 +71,44 @@ class EmpresaServiceImpl(IEmpresaService):
                 logger.error(f"Error BD al crear empresa: {str(e)}")
                 raise ExcepcionDeNegocio(MensajesDeError.ERROR_GENERAL)
 
+    async def listar_empresas(self, pagina: int, tamano: int, busqueda: str | None, estado: int | None) -> EmpresaPaginacionRespuesta:
+        from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
+        empresas, total = await EmpresaRepository.listar_paginado(pagina, tamano, busqueda, estado)
+        items = [EmpresaRespuesta.model_validate(empresa) for empresa in empresas]
+        return EmpresaPaginacionRespuesta(items=items, total=total, pagina=pagina, tamano=tamano)
+
+    async def obtener_empresa(self, empresa_id: int) -> EmpresaRespuesta:
+        from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
+        empresa = await EmpresaRepository.buscar_por_id(empresa_id)
+        if not empresa:
+            raise ExcepcionDeNegocio("Empresa no encontrada")
+        return EmpresaRespuesta.model_validate(empresa)
+
+    async def actualizar_empresa(self, empresa_id: int, peticion: EmpresaGestionActualizarPeticion, saas_admin_id: int) -> EmpresaRespuesta:
+        from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
+        empresa = await EmpresaRepository.buscar_por_id(empresa_id)
+        if not empresa:
+            raise ExcepcionDeNegocio("Empresa no encontrada")
+
+        empresa.nombre_comercial = peticion.nombre_comercial
+        empresa.razon_social = peticion.razon_social
+        empresa.ruc = peticion.ruc
+        empresa.subdominio = peticion.subdominio
+        
+        guardado = await EmpresaRepository.guardar(empresa)
+        logger.info(f"[AUDITORIA] empresa_actualizada saas_admin={saas_admin_id} empresa_id={guardado.id}")
+        return EmpresaRespuesta.model_validate(guardado)
+
+    async def cambiar_estado_empresa(self, empresa_id: int, estado: int, saas_admin_id: int) -> EmpresaRespuesta:
+        from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
+        empresa = await EmpresaRepository.buscar_por_id(empresa_id)
+        if not empresa:
+            raise ExcepcionDeNegocio("Empresa no encontrada")
+
+        empresa.estado = estado
+        guardado = await EmpresaRepository.guardar(empresa)
+        logger.info(f"[AUDITORIA] empresa_estado_cambiado saas_admin={saas_admin_id} empresa_id={guardado.id} estado={estado}")
+        return EmpresaRespuesta.model_validate(guardado)
+
 def get_empresa_service() -> IEmpresaService:
     return EmpresaServiceImpl()

@@ -86,6 +86,14 @@ def requiere_rol_empresa(rol_nombre: str):
         empresa_encontrada = False
         for asignacion in getattr(usuario, 'empresas_asignadas', []):
             if int(asignacion.empresa_id) == int(empresa_id) and asignacion.estado == 1:
+                
+                # Validar el estado global de la empresa
+                if asignacion.empresa:
+                    if asignacion.empresa.estado == 0:
+                        raise ExcepcionDeNegocio("Esta empresa se encuentra inactiva.")
+                    if asignacion.empresa.estado == 2:
+                        raise ExcepcionDeNegocio("Esta empresa se encuentra temporalmente suspendida. Por favor, comuníquese con el administrador.")
+
                 if asignacion.rol_empresa and asignacion.rol_empresa.nombre == rol_nombre:
                     empresa_encontrada = True
                     break
