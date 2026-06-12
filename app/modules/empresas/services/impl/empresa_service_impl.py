@@ -9,7 +9,9 @@ from app.modules.empresas.models.rol_empresa import RolEmpresa
 from app.modules.empresas.models.usuario_empresa import UsuarioEmpresa
 from app.modules.empresas.enums.roles_empresa import RolesEmpresa
 from app.modules.empresas.schemas.peticion.empresa_crear_peticion import EmpresaCrearPeticion
+from app.modules.empresas.schemas.peticion.empresa_gestion_peticion import EmpresaGestionActualizarPeticion
 from app.modules.empresas.schemas.respuesta.empresa_respuesta import EmpresaRespuesta
+from app.modules.empresas.schemas.respuesta.empresa_paginacion_respuesta import EmpresaPaginacionRespuesta
 from app.modules.empresas.services.empresa_service import IEmpresaService
 from app.modules.usuarios.models.usuario import Usuario
 
@@ -27,7 +29,7 @@ class EmpresaServiceImpl(IEmpresaService):
                 )
                 existe = (await session.execute(stmt_existe)).scalars().first()
                 if existe:
-                    raise ExcepcionDeNegocio("El subdominio o RUC ya se encuentra registrado.")
+                    raise ExcepcionDeNegocio(MensajesDeError.EMPRESA_DUPLICADA)
 
                 # 2. Verificar que el usuario dueño existe
                 stmt_usuario = select(Usuario).where(Usuario.id == peticion.usuario_dueño_id)
@@ -39,7 +41,7 @@ class EmpresaServiceImpl(IEmpresaService):
                 stmt_rol = select(RolEmpresa).where(RolEmpresa.nombre == RolesEmpresa.ADMIN_EMPRESA.value)
                 rol_admin = (await session.execute(stmt_rol)).scalars().first()
                 if not rol_admin:
-                    raise ExcepcionDeNegocio("Error de consistencia: Rol ADMIN_EMPRESA no existe.")
+                    raise ExcepcionDeNegocio(MensajesDeError.ERROR_GENERAL)
 
                 # 4. Crear la Empresa
                 nueva_empresa = Empresa(
@@ -81,14 +83,14 @@ class EmpresaServiceImpl(IEmpresaService):
         from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
         empresa = await EmpresaRepository.buscar_por_id(empresa_id)
         if not empresa:
-            raise ExcepcionDeNegocio("Empresa no encontrada")
+            raise ExcepcionDeNegocio(MensajesDeError.EMPRESA_NO_ENCONTRADA)
         return EmpresaRespuesta.model_validate(empresa)
 
     async def actualizar_empresa(self, empresa_id: int, peticion: EmpresaGestionActualizarPeticion, saas_admin_id: int) -> EmpresaRespuesta:
         from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
         empresa = await EmpresaRepository.buscar_por_id(empresa_id)
         if not empresa:
-            raise ExcepcionDeNegocio("Empresa no encontrada")
+            raise ExcepcionDeNegocio(MensajesDeError.EMPRESA_NO_ENCONTRADA)
 
         empresa.nombre_comercial = peticion.nombre_comercial
         empresa.razon_social = peticion.razon_social
@@ -103,7 +105,7 @@ class EmpresaServiceImpl(IEmpresaService):
         from app.modules.empresas.repositories.empresa_repository import EmpresaRepository
         empresa = await EmpresaRepository.buscar_por_id(empresa_id)
         if not empresa:
-            raise ExcepcionDeNegocio("Empresa no encontrada")
+            raise ExcepcionDeNegocio(MensajesDeError.EMPRESA_NO_ENCONTRADA)
 
         empresa.estado = estado
         guardado = await EmpresaRepository.guardar(empresa)

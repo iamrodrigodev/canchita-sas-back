@@ -25,7 +25,11 @@ class MensajesDeError(Enum):
     RECURSO_AJENO = ("Acceso denegado: no puede acceder a recursos de otro usuario", 403)
     JWT_CLAVE_MUY_CORTA = ("JWT_SECRET_KEY debe tener al menos 32 caracteres.", 500)
     CORS_ORIGEN_INVALIDO = ("CORS_CREDENCIALES no puede ser True si CORS_ORIGENES incluye '*'. Especifique los orígenes exactos en su archivo .env.", 500)
-
+    EMPRESA_DUPLICADA = ("El subdominio o RUC ya se encuentra registrado.", 400)
+    EMPRESA_NO_ENCONTRADA = ("Empresa no encontrada.", 404)
+    EMPRESA_INACTIVA = ("Esta empresa se encuentra inactiva.", 403)
+    EMPRESA_SUSPENDIDA = ("Esta empresa se encuentra temporalmente suspendida. Por favor, comuníquese con el administrador.", 403)
+    ERROR_GENERAL = ("Ocurrió un error al procesar la solicitud.", 500)
     def __init__(self, mensaje, codigo):
         self.mensaje = mensaje
         self.codigo = codigo
