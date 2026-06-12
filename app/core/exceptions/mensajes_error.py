@@ -17,6 +17,8 @@ class MensajesDeError(Enum):
     TAMANO_PAGINA_INVALIDO = ("El tamaño debe estar entre 1 y 100", 400)
     ESTADO_INVALIDO = ("El estado debe ser 0 o 1", 400)
     NO_PUEDE_AUTODESACTIVARSE = ("No puede desactivar su propio usuario", 400)
+    DEMASIADOS_INTENTOS = ("Demasiados intentos. Intente nuevamente.", 429)
+    DEMASIADAS_SOLICITUDES = ("Demasiadas solicitudes. Intente nuevamente.", 429)
 
     def __init__(self, mensaje, codigo):
         self.mensaje = mensaje
