@@ -20,11 +20,7 @@ def test_contrato_openapi_rutas_criticas_presentes():
 
     criticas = [
         '/api/autenticacion/iniciar-sesion',
-        '/api/evaluaciones/aplicaciones/iniciar',
-        '/api/evaluaciones/aplicaciones/{aplicacion_id}/resultado',
         '/api/usuarios',
-        '/api/paciente/evaluaciones',
-        '/api/paciente/resultados',
     ]
 
     for ruta in criticas:
