@@ -7,6 +7,7 @@ from app.core.security.seguridad import (
     obtener_usuario_actual_id,
     requiere_rol,
 )
+from app.core.config.sistema_constantes import SistemaConstantes
 from app.modules.usuarios.schemas.esquemas_usuario_gestion_peticion import (
     UsuarioGestionActualizarPeticion,
     UsuarioGestionCrearPeticion,
@@ -30,8 +31,8 @@ async def crear_usuario_gestion(
 
 @usuarios_gestion_router.get('', dependencies=[Depends(requiere_rol(RolesSistema.ADMINISTRADOR.value))])
 async def listar_usuarios_gestion(
-    pagina: int = Query(default=1),
-    tamano: int = Query(default=10),
+    pagina: int = Query(default=SistemaConstantes.PAGINACION_PAGINA_DEFECTO),
+    tamano: int = Query(default=SistemaConstantes.PAGINACION_TAMANO_DEFECTO),
     correo: str | None = Query(default=None),
     rol: int | None = Query(default=None),
     estado: int | None = Query(default=None),
